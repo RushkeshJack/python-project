@@ -1,0 +1,17 @@
+'''
+Created on Feb 19, 2022
+
+@author: root
+'''
+import unittest
+from demos.Exercise_9 import login
+from demos.Exercise_10 import login_add_customer
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
+    tc1 = unittest.TestLoader().loadTestsFromModule(login)
+    tc2 = unittest.TestLoader().loadTestsFromModule(login_add_customer)
+    test_suite = unittest.Testsuite([tc1,tc2])
+    
+    unittest.TextTestRunner(verbosity=1).run(test_suite)
