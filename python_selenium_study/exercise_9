@@ -1,1 +1,41 @@
+'''
+Created on Feb 19, 2022
 
+@author: root
+'''
+import unittest
+from selenium import webdriver
+from demos.BaseClass import BaseClass
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from time import sleep
+
+AUT = 'http://localhost:8080/EDUBank/tellerLogin'
+path = '/root/geckodriver'
+
+class login(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        BaseClass.browser = webdriver.Firefox(executable_path=path)
+        BaseClass.browser.maximize_window()
+        BaseClass.browser.get(AUT)
+
+    @classmethod
+    def tearDownClass(self):
+        BaseClass.browser.close()
+
+
+    def test_Login(self):
+        print(BaseClass.browser.title)
+     
+        BaseClass.browser.find_element(By.ID,'tellerId').send_keys('T7302')
+        BaseClass.browser.find_element(By.ID,'password').send_keys('T7302*abc')
+        BaseClass.browser.find_element(By.TAG_NAME,'button').click()
+        
+        print(BaseClass.browser.title)
+
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
