@@ -1,1 +1,50 @@
+'''
+Created on Feb 19, 2022
 
+@author: root
+'''
+import unittest
+from selenium import webdriver
+from demos.BaseClass import BaseClass
+from selenium.webdriver.common.by import By
+
+AUT = 'http://localhost:8080/EDUBank'
+path = '/root/geckodriver'
+
+class Test(unittest.TestCase):
+
+
+    def setUp(self):
+        BaseClass.browser = webdriver.Firefox(executable_path=path)
+        BaseClass.browser.get(AUT)
+        BaseClass.browser.maximize_window()
+        BaseClass.browser.implicitly_wait(10)
+        
+
+
+    def tearDown(self):
+        BaseClass.browser.close()
+
+
+    def testName(self):
+        BaseClass.browser.find_element(By.ID,'userId').send_keys('James')
+        BaseClass.browser.find_element(By.ID,'password').send_keys('James!123')
+        BaseClass.browser.find_element(By.XPATH,'/html/body/div[2]/div[1]/div/div[2]/form/button').click()
+        
+        BaseClass.browser.find_element(By.NAME,'fromDate').send_keys('2019-11-12')
+        BaseClass.browser.find_element(By.NAME,'toDate').send_keys('2021-11-12')
+        BaseClass.browser.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div[2]/form/div[3]/button').click()
+        
+        table = BaseClass.browser.find_element(By.TAG_NAME,'table')
+        rows = table.find_elements(By.TAG_NAME,'tr')
+        
+        for i in range(1,len(rows)):
+            cols = rows[i].find_elements(By.TAG_NAME,'td')
+            if(cols[3].text == 'Cr.'):
+                print(cols[1].text)
+          
+
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
